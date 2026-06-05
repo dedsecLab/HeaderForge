@@ -1,0 +1,12 @@
+Uuid: 807907f5380c4cb38748ef4fc1d8cdbc
+ExtensionType: 1
+Name: HeaderForge
+RepoName: add-custom-header
+ScreenVersion: 1.1
+SerialVersion: 2
+MinPlatformVersion: 0
+ProOnly: False
+Author: dedsecLab
+ShortDescription: Inject, replace, and manage custom HTTP headers with multiple profiles, per-scope rules, and settings persistence.
+EntryPoint: build/libs/burpHeaderForge.jar
+BuildCommand: gradle jar
