@@ -56,6 +56,7 @@ public class ProfileTableModel extends AbstractTableModel {
     private static String friendlyMode(String mode) {
         if ("regexp".equals(mode))    return "RegExp";
         if ("hardcoded".equals(mode)) return "Hard-Coded";
+        if ("cookie".equals(mode))    return "Cookie";
         return "Disabled";
     }
 }

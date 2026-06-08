@@ -91,6 +91,7 @@ public class ProfileManager {
                 p.setMode(loadOr(pfx + "mode", p.getMode()));
                 p.setRegexpPattern(loadOr(pfx + "regexpPattern", p.getRegexpPattern()));
                 p.setHardcodedValue(loadOr(pfx + "hardcodedValue", p.getHardcodedValue()));
+                p.setCookieName(loadOr(pfx + "cookieName", p.getCookieName()));
                 p.setScopePattern(loadOr(pfx + "scopePattern", p.getScopePattern()));
                 p.setHttpMethods(loadOr(pfx + "httpMethods", p.getHttpMethods()));
                 p.setOnlyIfNotExists("true".equals(loadOr(pfx + "onlyIfNotExists", "false")));
@@ -160,6 +161,7 @@ public class ProfileManager {
             jsonField(sb, "mode",              p.getMode(), true);
             jsonField(sb, "regexpPattern",     p.getRegexpPattern(), true);
             jsonField(sb, "hardcodedValue",    p.getHardcodedValue(), true);
+            jsonField(sb, "cookieName",        p.getCookieName(), true);
             jsonField(sb, "scopePattern",      p.getScopePattern(), true);
             jsonField(sb, "httpMethods",       p.getHttpMethods(), true);
             jsonFieldLast(sb, "onlyIfNotExists", p.isOnlyIfNotExists());
@@ -195,6 +197,7 @@ public class ProfileManager {
             if (m.containsKey("mode"))              p.setMode(str(m, "mode"));
             if (m.containsKey("regexpPattern"))     p.setRegexpPattern(str(m, "regexpPattern"));
             if (m.containsKey("hardcodedValue"))    p.setHardcodedValue(str(m, "hardcodedValue"));
+            if (m.containsKey("cookieName"))        p.setCookieName(str(m, "cookieName"));
             if (m.containsKey("scopePattern"))      p.setScopePattern(str(m, "scopePattern"));
             if (m.containsKey("httpMethods"))       p.setHttpMethods(str(m, "httpMethods"));
             if (m.containsKey("onlyIfNotExists"))   p.setOnlyIfNotExists(boolVal(m, "onlyIfNotExists"));

@@ -30,7 +30,9 @@ public class MainPanel extends JPanel {
     private JRadioButton disabledRadio;
     private JRadioButton regexpRadio;
     private JRadioButton hardcodedRadio;
+    private JRadioButton cookieRadio;
     private JTextField regexpField;
+    private JTextField cookieField;
     private JTextArea  hardcodedArea;
     private JTextField scopeField;
     private JTextField methodsField;
@@ -205,15 +207,18 @@ public class MainPanel extends JPanel {
         disabledRadio  = new JRadioButton("Disabled");
         regexpRadio    = new JRadioButton("Regular Expression");
         hardcodedRadio = new JRadioButton("Hard-Coded Value");
+        cookieRadio    = new JRadioButton("From Cookie");
         modeGroup.add(disabledRadio);
         modeGroup.add(regexpRadio);
         modeGroup.add(hardcodedRadio);
+        modeGroup.add(cookieRadio);
         disabledRadio.setSelected(true);
 
         JPanel radioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 0));
         radioPanel.add(disabledRadio);
         radioPanel.add(regexpRadio);
         radioPanel.add(hardcodedRadio);
+        radioPanel.add(cookieRadio);
         gbc.gridx = 1; gbc.gridwidth = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
         editor.add(radioPanel, gbc);
         gbc.gridwidth = 1;
@@ -225,6 +230,15 @@ public class MainPanel extends JPanel {
         regexpField = new JTextField(30);
         gbc.gridx = 1; gbc.gridwidth = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
         editor.add(regexpField, gbc);
+        gbc.gridwidth = 1;
+        row++;
+
+        // -- Cookie name field
+        gbc.gridx = 0; gbc.gridy = row; gbc.fill = GridBagConstraints.NONE;
+        editor.add(new JLabel("Cookie Name:"), gbc);
+        cookieField = new JTextField(30);
+        gbc.gridx = 1; gbc.gridwidth = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
+        editor.add(cookieField, gbc);
         gbc.gridwidth = 1;
         row++;
 
@@ -323,6 +337,7 @@ public class MainPanel extends JPanel {
         headerNameField.getDocument().addDocumentListener(docListener);
         headerPrefixField.getDocument().addDocumentListener(docListener);
         regexpField.getDocument().addDocumentListener(docListener);
+        cookieField.getDocument().addDocumentListener(docListener);
         hardcodedArea.getDocument().addDocumentListener(docListener);
         scopeField.getDocument().addDocumentListener(docListener);
         methodsField.getDocument().addDocumentListener(docListener);
@@ -333,6 +348,7 @@ public class MainPanel extends JPanel {
         disabledRadio.addActionListener(radioListener);
         regexpRadio.addActionListener(radioListener);
         hardcodedRadio.addActionListener(radioListener);
+        cookieRadio.addActionListener(radioListener);
 
         onlyIfNotExistsCb.addActionListener(new ActionListener() {
             @Override public void actionPerformed(ActionEvent e) { onFormChanged(); }
@@ -362,6 +378,7 @@ public class MainPanel extends JPanel {
             headerNameField.setText(p.getHeaderName());
             headerPrefixField.setText(p.getHeaderValuePrefix());
             regexpField.setText(p.getRegexpPattern());
+            cookieField.setText(p.getCookieName());
             hardcodedArea.setText(p.getHardcodedValue());
             scopeField.setText(p.getScopePattern());
             methodsField.setText(p.getHttpMethods());
@@ -370,6 +387,7 @@ public class MainPanel extends JPanel {
             switch (p.getMode()) {
                 case "regexp":    regexpRadio.setSelected(true); break;
                 case "hardcoded": hardcodedRadio.setSelected(true); break;
+                case "cookie":    cookieRadio.setSelected(true); break;
                 default:          disabledRadio.setSelected(true);
             }
             updatePreview();
@@ -383,6 +401,7 @@ public class MainPanel extends JPanel {
         p.setHeaderName(headerNameField.getText());
         p.setHeaderValuePrefix(headerPrefixField.getText());
         p.setRegexpPattern(regexpField.getText());
+        p.setCookieName(cookieField.getText());
         p.setHardcodedValue(hardcodedArea.getText());
         p.setScopePattern(scopeField.getText());
         p.setHttpMethods(methodsField.getText());
@@ -390,6 +409,7 @@ public class MainPanel extends JPanel {
 
         if (regexpRadio.isSelected())         p.setMode("regexp");
         else if (hardcodedRadio.isSelected()) p.setMode("hardcoded");
+        else if (cookieRadio.isSelected())    p.setMode("cookie");
         else                                  p.setMode("disabled");
     }
 
@@ -399,6 +419,8 @@ public class MainPanel extends JPanel {
             hdr += hardcodedArea.getText();
         } else if (regexpRadio.isSelected()) {
             hdr += "[regexp: " + regexpField.getText() + "]";
+        } else if (cookieRadio.isSelected()) {
+            hdr += "[cookie: " + cookieField.getText() + "]";
         } else {
             hdr += "(disabled)";
         }

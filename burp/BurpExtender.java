@@ -145,6 +145,9 @@ public class BurpExtender implements IBurpExtender, ISessionHandlingAction,
             } else if (p.isRegexp()) {
                 token  = extractFromMacro(p.getRegexpPattern(), macroItems);
                 source = "regexp";
+            } else if (p.isCookie()) {
+                token  = extractCookie((ArrayList<String>) helpers.analyzeRequest(currentRequest).getHeaders(), p.getCookieName());
+                source = "cookie";
             }
 
             if (token == null || token.isEmpty()) {
@@ -260,6 +263,24 @@ public class BurpExtender implements IBurpExtender, ISessionHandlingAction,
             if (m.find()) {
                 String token = m.group(1);
                 if (token != null && !token.isEmpty()) return token;
+            }
+        }
+        return null;
+    }
+
+    private String extractCookie(List<String> headers, String cookieName) {
+        if (cookieName == null || cookieName.isEmpty()) return null;
+        String prefix = cookieName + "=";
+        for (String header : headers) {
+            if (header.toLowerCase().startsWith("cookie:")) {
+                String cookieString = header.substring(7);
+                String[] cookies = cookieString.split(";");
+                for (String cookie : cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(prefix)) {
+                        return cookie.substring(prefix.length());
+                    }
+                }
             }
         }
         return null;

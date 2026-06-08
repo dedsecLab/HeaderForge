@@ -15,6 +15,7 @@ public class HeaderProfile {
     private String mode;
     private String regexpPattern;
     private String hardcodedValue;
+    private String cookieName;
     /** URL regex — empty string means "match all URLs". */
     private String scopePattern;
     /** Comma-separated HTTP methods — empty means "all methods". */
@@ -33,6 +34,7 @@ public class HeaderProfile {
         this.mode = "disabled";
         this.regexpPattern = "access_token\\\":\\\"(.*?)\\\"";
         this.hardcodedValue = "";
+        this.cookieName = "";
         this.scopePattern = "";
         this.httpMethods = "";
         this.onlyIfNotExists = false;
@@ -47,6 +49,7 @@ public class HeaderProfile {
         this.mode = other.mode;
         this.regexpPattern = other.regexpPattern;
         this.hardcodedValue = other.hardcodedValue;
+        this.cookieName = other.cookieName;
         this.scopePattern = other.scopePattern;
         this.httpMethods = other.httpMethods;
         this.onlyIfNotExists = other.onlyIfNotExists;
@@ -75,6 +78,9 @@ public class HeaderProfile {
     public String getHardcodedValue() { return hardcodedValue; }
     public void setHardcodedValue(String hardcodedValue) { this.hardcodedValue = hardcodedValue; }
 
+    public String getCookieName() { return cookieName; }
+    public void setCookieName(String cookieName) { this.cookieName = cookieName; }
+
     public String getScopePattern() { return scopePattern; }
     public void setScopePattern(String scopePattern) { this.scopePattern = scopePattern; }
 
@@ -89,6 +95,7 @@ public class HeaderProfile {
     public boolean isDisabled() { return "disabled".equals(mode); }
     public boolean isRegexp()   { return "regexp".equals(mode); }
     public boolean isHardcoded(){ return "hardcoded".equals(mode); }
+    public boolean isCookie()   { return "cookie".equals(mode); }
 
     @Override
     public String toString() {

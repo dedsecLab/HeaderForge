@@ -263,6 +263,11 @@ The JAR will be in `build/libs/`.
     ```bash
     jar cvf burpHeaderForge.jar -C build .
     ```
+    
+    *(Note: On Windows, if `jar` is not in your PATH, you may need to use the full path to your JDK's jar executable. For example:)*
+    ```powershell
+    & "C:\Program Files\Java\jdk-25\bin\jar.exe" cvf burpHeaderForge.jar -C build .
+    ```
 
  5. Load `burpHeaderForge.jar` into Burp
 
